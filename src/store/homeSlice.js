@@ -4,16 +4,14 @@ export const homeSlice = createSlice({
     name: "home",
     initialState: {
         popularMovies: [],
-        apiConfiguration: {},
+        url: {},
     },
     reducers: {
         getApiConfiguration: (state, action) => {
-            state.apiConfiguration = action.payload;
-            // return {...state, ...action.payload };
+            state.url = action.payload;
         },
         getPopularMovies: (state, action) => {
             state.popularMovies = action.payload;
-            // return [...action.payload];
         },
     },
 });
