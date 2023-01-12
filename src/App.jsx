@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getPopularMovies, getApiConfiguration } from "./store/homeSlice";
 import useFetch from "./hooks/useFetch";
 
+import Header from "./components/header/Header";
 import Home from "./pages/home/Home";
 
 function App() {
@@ -30,8 +31,8 @@ function App() {
         fetchDataFromApi("/configuration").then((res) => {
             console.log(res);
             const url = {
-                poster: res.images.base_url + res.images.poster_sizes[3],
-                backdrop: res.images.base_url + res.images.backdrop_sizes[3],
+                poster: res.images.base_url + "original",
+                backdrop: res.images.base_url + "original",
             };
             dispatch(getApiConfiguration(url));
         });
@@ -39,6 +40,7 @@ function App() {
 
     return (
         <BrowserRouter>
+            <Header />
             <Routes>
                 <Route path="/" element={<Home />} />
             </Routes>

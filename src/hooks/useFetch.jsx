@@ -12,6 +12,6 @@ const useFetch = (endpoint) => {
         setData(res);
     };
 
-    return { data };
+    return data;
 };
 export default useFetch;
