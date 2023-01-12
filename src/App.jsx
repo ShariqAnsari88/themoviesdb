@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { fetchDataFromApi } from "./utils/api";
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import { useSelector, useDispatch } from "react-redux";
 import { getPopularMovies, getApiConfiguration } from "./store/homeSlice";
 import useFetch from "./hooks/useFetch";
+
+import Home from "./pages/home/Home";
 
 function App() {
     const { url, popularMovies } = useSelector((state) => state.home);
@@ -34,10 +38,11 @@ function App() {
     };
 
     return (
-        <div className="App">
-            {popularMovies?.[0]?.title}
-            <img src={url?.poster + popularMovies?.[0]?.poster_path} />
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
 
