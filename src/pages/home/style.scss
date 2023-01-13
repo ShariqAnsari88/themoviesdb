@@ -1,0 +1,18 @@
+@import "../../mixins.scss";
+.popularMoviesSection {
+    margin-top: -100px;
+    position: relative;
+    @include md {
+        margin: 0;
+    }
+    & > .contentWrapper {
+        display: flex;
+        align-items: center;
+    }
+    .carouselTitle {
+        font-size: 24px;
+        color: white;
+        font-weight: normal;
+        margin-bottom: 20px;
+    }
+}

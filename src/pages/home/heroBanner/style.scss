@@ -76,11 +76,7 @@
             button {
                 width: 100px;
                 height: 40px;
-                background: linear-gradient(
-                    98.37deg,
-                    #f89e00 0.99%,
-                    #da2f68 100%
-                );
+                background: var(--gradient);
                 color: white;
                 outline: 0;
                 border: 0;

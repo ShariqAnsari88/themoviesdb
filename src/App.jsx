@@ -1,29 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { fetchDataFromApi } from "./utils/api";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { useSelector, useDispatch } from "react-redux";
-import { getPopularMovies, getApiConfiguration } from "./store/homeSlice";
-import useFetch from "./hooks/useFetch";
+import { useDispatch } from "react-redux";
+import {
+    getPopularMovies,
+    getApiConfiguration,
+    getGenres,
+} from "./store/homeSlice";
 
 import Header from "./components/header/Header";
 import Home from "./pages/home/Home";
 
 function App() {
-    const { url, popularMovies } = useSelector((state) => state.home);
     const dispatch = useDispatch();
-    // const { data } = useFetch('/movie/popular');
 
     useEffect(() => {
         fetchApiConfig();
-        fetchPopularProducts();
+        fetchPopularMovies();
+        fetchGenres();
     }, []);
 
-    const fetchPopularProducts = () => {
+    const fetchPopularMovies = () => {
         fetchDataFromApi("/movie/popular").then((res) => {
             console.log(res);
             dispatch(getPopularMovies(res.results));
+        });
+    };
+
+    const fetchGenres = () => {
+        fetchDataFromApi("/genre/movie/list").then((res) => {
+            console.log(res);
+            let genres = {};
+            res.genres.map((item) => (genres[item.id] = item));
+            dispatch(getGenres(genres));
         });
     };
 

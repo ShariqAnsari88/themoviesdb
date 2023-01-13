@@ -1,0 +1,112 @@
+@import "../../mixins.scss";
+.carousel {
+    margin-bottom: 40px;
+    .contentWrapper {
+        position: relative;
+    }
+    .carouselTitle {
+        font-size: 24px;
+        color: white;
+        margin-bottom: 20px;
+        font-weight: normal;
+    }
+    .arrow {
+        font-size: 30px;
+        color: black;
+        position: absolute;
+        top: 44%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        opacity: 0.5;
+        z-index: 1;
+        display: none;
+        @include md {
+            display: block;
+        }
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+    .carouselLeftNav {
+        left: 30px;
+    }
+    .carouselRighttNav {
+        right: 30px;
+    }
+    .carouselItems {
+        display: flex;
+        gap: 10px;
+        overflow-y: hidden;
+        margin-right: -20px;
+        margin-left: -20px;
+        padding: 0 20px;
+        @include md {
+            gap: 20px;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .carouselItem {
+            width: 125px;
+            @include md {
+                width: calc(33% - 10px);
+            }
+            @include xl {
+                width: calc(25% - 15px);
+            }
+            flex-shrink: 0;
+            .posterBlock {
+                border-radius: 12px;
+                position: relative;
+                height: 200px;
+                width: 100%;
+                background-size: cover;
+                background-position: center;
+                margin-bottom: 30px;
+                display: flex;
+                align-items: flex-end;
+                justify-content: space-between;
+                padding: 10px;
+                @include md {
+                    height: 400px;
+                }
+                .circleRating {
+                    width: 40px;
+                    height: 40px;
+                    position: relative;
+                    top: 30px;
+                    background-color: white;
+                    flex-shrink: 0;
+                    @include md {
+                        width: 50px;
+                        height: 50px;
+                    }
+                }
+                .genres {
+                    display: none;
+                    @include md {
+                        display: flex;
+                    }
+                }
+            }
+            .textBlock {
+                color: white;
+                display: flex;
+                flex-direction: column;
+                .title {
+                    font-size: 16px;
+                    margin-bottom: 10px;
+                    line-height: 24px;
+                    @include ellipsis;
+                    @include md {
+                        font-size: 20px;
+                    }
+                }
+                .date {
+                    font-size: 14px;
+                    opacity: 0.5;
+                }
+            }
+        }
+    }
+}
