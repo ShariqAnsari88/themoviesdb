@@ -8,11 +8,12 @@
     & > .contentWrapper {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
     }
     .carouselTitle {
         font-size: 24px;
         color: white;
         font-weight: normal;
-        margin-bottom: 20px;
     }
 }
