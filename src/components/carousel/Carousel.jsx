@@ -90,6 +90,7 @@ const Carousel = ({ data, loading, title }) => {
                         {skItem()}
                         {skItem()}
                         {skItem()}
+                        {skItem()}
                     </div>
                 )}
             </ContentWrapper>
