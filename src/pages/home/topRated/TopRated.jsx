@@ -15,7 +15,7 @@ const TopRated = () => {
         setEndpoint(tab === "Movies" ? "movie" : "tv");
     };
     return (
-        <div className="carouselSection shiftTop">
+        <div className="carouselSection">
             <ContentWrapper>
                 <span className="carouselTitle">Top Rated</span>
                 <SwitchTabs
