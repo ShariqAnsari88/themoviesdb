@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { getPopular, getApiConfiguration, getGenres } from "./store/homeSlice";
 
 import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
 import Home from "./pages/home/Home";
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
             </Routes>
+            <Footer />
         </BrowserRouter>
     );
 }
