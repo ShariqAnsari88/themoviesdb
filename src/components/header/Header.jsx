@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { SlMenu } from "react-icons/sl";
 import { VscChromeClose } from "react-icons/vsc";
@@ -7,9 +7,34 @@ import "./style.scss";
 import ContentWrapper from "../contentWrapper/ContentWrapper";
 
 const Header = () => {
+    const [show, setShow] = useState("top");
+    const [lastScrollY, setLastScrollY] = useState(0);
     const [mobileMenu, setMobileMenu] = useState(false);
+
+    const controlNavbar = () => {
+        if (window.scrollY > 200) {
+            if (window.scrollY > lastScrollY) {
+                setShow("hide");
+            } else {
+                setShow("show");
+            }
+        } else {
+            setShow("top");
+        }
+        setLastScrollY(window.scrollY);
+    };
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            window.addEventListener("scroll", controlNavbar);
+            return () => {
+                window.removeEventListener("scroll", controlNavbar);
+            };
+        }
+    }, [lastScrollY]);
+
     return (
-        <header className={`header ${mobileMenu ? "mobileView" : ""}`}>
+        <header className={`header ${mobileMenu ? "mobileView" : ""} ${show}`}>
             <ContentWrapper>
                 <div className="logo">
                     <img
@@ -22,7 +47,6 @@ const Header = () => {
                     <li className="menuItem">Movies</li>
                     <li className="menuItem">TV Shows</li>
                     <li className="menuItem">People</li>
-                    <li className="menuItem">More</li>
                     <li className="menuItem">
                         <HiOutlineSearch />
                     </li>

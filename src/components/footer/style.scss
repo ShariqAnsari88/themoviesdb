@@ -1,6 +1,6 @@
 @import "../../mixins.scss";
 .footer {
-    background-color: #041226;
+    background-color: var(--black3);
     padding: 50px 0;
     color: white;
     .contentWrapper {
