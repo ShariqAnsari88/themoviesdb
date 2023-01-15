@@ -1,9 +1,12 @@
 @import "../../mixins.scss";
 .carouselSection {
-    margin-top: -100px;
     position: relative;
-    @include md {
-        margin: 0;
+    margin-bottom: 70px;
+    &.shiftTop {
+        margin-top: -100px;
+        @include md {
+            margin-top: 0;
+        }
     }
     & > .contentWrapper {
         display: flex;

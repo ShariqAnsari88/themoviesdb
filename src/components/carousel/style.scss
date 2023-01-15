@@ -156,16 +156,3 @@
         }
     }
 }
-
-.skeleton {
-    animation: skeleton-loading 1s linear infinite alternate;
-}
-
-@keyframes skeleton-loading {
-    0% {
-        background-color: #0a2955;
-    }
-    100% {
-        background-color: #193763;
-    }
-}
