@@ -5,6 +5,7 @@ import { VscChromeClose } from "react-icons/vsc";
 import "./style.scss";
 
 import ContentWrapper from "../contentWrapper/ContentWrapper";
+import { menuData } from "./menuData";
 
 const Header = () => {
     const [show, setShow] = useState("top");
@@ -13,7 +14,7 @@ const Header = () => {
 
     const controlNavbar = () => {
         if (window.scrollY > 200) {
-            if (window.scrollY > lastScrollY) {
+            if (window.scrollY > lastScrollY && !mobileMenu) {
                 setShow("hide");
             } else {
                 setShow("show");
@@ -44,9 +45,25 @@ const Header = () => {
                 </div>
 
                 <ul className="menuItems">
-                    <li className="menuItem">Movies</li>
-                    <li className="menuItem">TV Shows</li>
-                    <li className="menuItem">People</li>
+                    {menuData.map((menu) => {
+                        return (
+                            <li key={menu.id} className="menuItem">
+                                {menu.name}
+                                {menu.subMenu && (
+                                    <div className="subMenu">
+                                        {menu.subMenu.map((subMenu) => (
+                                            <div
+                                                key={subMenu.id}
+                                                className="subMenuItem"
+                                            >
+                                                {subMenu.name}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </li>
+                        );
+                    })}
                     <li className="menuItem">
                         <HiOutlineSearch />
                     </li>
