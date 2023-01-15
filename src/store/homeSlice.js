@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const homeSlice = createSlice({
     name: "home",
     initialState: {
-        popularMovies: [],
+        popular: [],
         url: {},
         genres: {},
     },
@@ -11,8 +11,8 @@ export const homeSlice = createSlice({
         getApiConfiguration: (state, action) => {
             state.url = action.payload;
         },
-        getPopularMovies: (state, action) => {
-            state.popularMovies = action.payload;
+        getPopular: (state, action) => {
+            state.popular = action.payload;
         },
         getGenres: (state, action) => {
             state.genres = action.payload;
@@ -21,7 +21,6 @@ export const homeSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { getPopularMovies, getApiConfiguration, getGenres } =
-    homeSlice.actions;
+export const { getPopular, getApiConfiguration, getGenres } = homeSlice.actions;
 
 export default homeSlice.reducer;

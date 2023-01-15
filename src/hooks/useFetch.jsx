@@ -1,17 +1,27 @@
 import { useEffect, useState } from "react";
 import { fetchDataFromApi } from "../utils/api";
-const useFetch = (endpoint) => {
-    const [data, setData] = useState();
+const useFetch = (url) => {
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        makeApiCall();
-    }, [endpoint]);
+        setLoading("loading...");
+        setData(null);
+        setError(null);
 
-    const makeApiCall = async () => {
-        const res = await fetchDataFromApi(endpoint);
-        setData(res);
-    };
+        fetchDataFromApi(url)
+            .then((res) => {
+                setLoading(false);
+                res.results && setData(res.results);
+            })
+            .catch((err) => {
+                setLoading(false);
+                setError("Something went wrong!");
+            });
+    }, [url]);
 
-    return data;
+    return { data, loading, error };
 };
+
 export default useFetch;

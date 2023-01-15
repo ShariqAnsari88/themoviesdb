@@ -5,7 +5,7 @@ import "./style.scss";
 import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
 
 const HeroBanner = () => {
-    const { url, popularMovies } = useSelector((state) => state.home);
+    const { url, popular } = useSelector((state) => state.home);
 
     return (
         <div className="heroBanner">
@@ -14,8 +14,7 @@ const HeroBanner = () => {
                 style={{
                     backgroundImage: `url('${
                         url.backdrop +
-                        popularMovies[Math.floor(Math.random() * 20)]
-                            ?.backdrop_path
+                        popular[Math.floor(Math.random() * 20)]?.backdrop_path
                     }')`,
                 }}
             />

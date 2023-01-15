@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
     BsFillArrowLeftCircleFill,
     BsFillArrowRightCircleFill,
@@ -12,11 +12,12 @@ import Genres from "../genres/Genres";
 
 import "./style.scss";
 
-const Carousel = ({ data, title }) => {
+const Carousel = ({ data, loading, title }) => {
+    const carouselContainer = useRef();
     const { url } = useSelector((state) => state.home);
 
     const navigation = (dir) => {
-        const container = document.querySelector(".carouselItems");
+        const container = carouselContainer.current;
 
         const scrollAmount =
             dir === "left"
@@ -27,6 +28,18 @@ const Carousel = ({ data, title }) => {
             left: scrollAmount,
             behavior: "smooth",
         });
+    };
+
+    const skItem = () => {
+        return (
+            <div className="skeletonItem">
+                <div className="posterBlock skeleton"></div>
+                <div className="textBlock">
+                    <div className="title skeleton"></div>
+                    <div className="date skeleton"></div>
+                </div>
+            </div>
+        );
     };
 
     return (
@@ -41,31 +54,44 @@ const Carousel = ({ data, title }) => {
                     className="carouselRighttNav arrow"
                     onClick={() => navigation("right")}
                 />
-                <div className="carouselItems">
-                    {data.map((item) => (
-                        <div key={item.id} className="carouselItem">
-                            <div
-                                className="posterBlock"
-                                style={{
-                                    backgroundImage: `url('${
-                                        url.poster + item.poster_path
-                                    }')`,
-                                }}
-                            >
-                                <CircleRating rating={item.vote_average} />
-                                <Genres data={item.genre_ids.slice(0, 2)} />
+                {!loading ? (
+                    <div className="carouselItems" ref={carouselContainer}>
+                        {data?.map((item) => (
+                            <div key={item.id} className="carouselItem">
+                                <div
+                                    className="posterBlock"
+                                    style={{
+                                        backgroundImage: `url('${
+                                            url.poster + item.poster_path
+                                        }')`,
+                                    }}
+                                >
+                                    <CircleRating
+                                        rating={item.vote_average.toFixed(1)}
+                                    />
+                                    <Genres data={item.genre_ids.slice(0, 2)} />
+                                </div>
+                                <div className="textBlock">
+                                    <span className="title">
+                                        {item.title || item.name}
+                                    </span>
+                                    <span className="date">
+                                        {dayjs(item.release_date).format(
+                                            "MMM D, YYYY"
+                                        )}
+                                    </span>
+                                </div>
                             </div>
-                            <div className="textBlock">
-                                <span className="title">{item.title}</span>
-                                <span className="date">
-                                    {dayjs(item.release_date).format(
-                                        "MMM D, YYYY"
-                                    )}
-                                </span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="loadingSkeleton">
+                        {skItem()}
+                        {skItem()}
+                        {skItem()}
+                        {skItem()}
+                    </div>
+                )}
             </ContentWrapper>
         </div>
     );

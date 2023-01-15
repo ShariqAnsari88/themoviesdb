@@ -4,11 +4,7 @@ import { fetchDataFromApi } from "./utils/api";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
-import {
-    getPopularMovies,
-    getApiConfiguration,
-    getGenres,
-} from "./store/homeSlice";
+import { getPopular, getApiConfiguration, getGenres } from "./store/homeSlice";
 
 import Header from "./components/header/Header";
 import Home from "./pages/home/Home";
@@ -18,14 +14,14 @@ function App() {
 
     useEffect(() => {
         fetchApiConfig();
-        fetchPopularMovies();
+        fetchPopular();
         fetchGenres();
     }, []);
 
-    const fetchPopularMovies = () => {
+    const fetchPopular = () => {
         fetchDataFromApi("/movie/popular").then((res) => {
             console.log(res);
-            dispatch(getPopularMovies(res.results));
+            dispatch(getPopular(res.results));
         });
     };
 
