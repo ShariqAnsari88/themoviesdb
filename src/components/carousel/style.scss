@@ -91,6 +91,7 @@
         }
         .carouselItem {
             width: 125px;
+            cursor: pointer;
             @include md {
                 width: calc(25% - 15px);
             }

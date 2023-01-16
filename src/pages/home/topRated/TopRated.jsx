@@ -23,7 +23,11 @@ const TopRated = () => {
                     onTabChange={onTabChange}
                 />
             </ContentWrapper>
-            <Carousel data={data} loading={loading} />
+            <Carousel
+                data={data?.results}
+                loading={loading}
+                endpoint={endpoint}
+            />
         </div>
     );
 };
