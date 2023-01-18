@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import ContentWrapper from "../contentWrapper/ContentWrapper";
 import CircleRating from "../circleRating/CircleRating";
 import Genres from "../genres/Genres";
+import Img from "../lazyLoadImage/Img";
 
 import "./style.scss";
 
@@ -70,14 +71,11 @@ const Carousel = ({ data, loading, endpoint, title }) => {
                                     )
                                 }
                             >
-                                <div
-                                    className="posterBlock"
-                                    style={{
-                                        backgroundImage: `url('${
-                                            url.poster + item.poster_path
-                                        }')`,
-                                    }}
-                                >
+                                <div className="posterBlock">
+                                    <Img
+                                        className="posterImg"
+                                        src={url.poster + item.poster_path}
+                                    />
                                     <CircleRating
                                         rating={item.vote_average.toFixed(1)}
                                     />

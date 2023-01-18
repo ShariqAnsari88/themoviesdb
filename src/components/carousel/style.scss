@@ -100,7 +100,6 @@
             }
             flex-shrink: 0;
             .posterBlock {
-                border-radius: 12px;
                 position: relative;
                 width: 100%;
                 aspect-ratio: 1 / 1.5;
@@ -111,6 +110,21 @@
                 align-items: flex-end;
                 justify-content: space-between;
                 padding: 10px;
+                .lazy-load-image-background {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 12px;
+                    overflow: hidden;
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        object-position: center;
+                    }
+                }
                 .circleRating {
                     width: 40px;
                     height: 40px;
@@ -125,6 +139,7 @@
                 }
                 .genres {
                     display: none;
+                    position: relative;
                     @include md {
                         display: flex;
                         flex-flow: wrap;

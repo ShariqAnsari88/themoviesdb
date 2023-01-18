@@ -3,21 +3,22 @@ import { useSelector } from "react-redux";
 import "./style.scss";
 
 import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
+import Img from "../../../components/lazyLoadImage/Img";
 
 const HeroBanner = () => {
     const { url, popular } = useSelector((state) => state.home);
 
     return (
         <div className="heroBanner">
-            <div
-                className="backdrop-img"
-                style={{
-                    backgroundImage: `url('${
+            <div className="backdrop-img">
+                <Img
+                    src={
                         url.backdrop +
                         popular[Math.floor(Math.random() * 20)]?.backdrop_path
-                    }')`,
-                }}
-            />
+                    }
+                />
+            </div>
+
             <div className="opacity-layer" />
             <ContentWrapper>
                 <div className="heroBannerContent">
