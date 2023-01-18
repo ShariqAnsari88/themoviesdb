@@ -9,6 +9,17 @@ import VideoPopup from "../../../components/videoPopup/VideoPopup";
 const VideosSection = ({ data, loading }) => {
     const [show, setShow] = useState(false);
     const [videoId, setVideoId] = useState(null);
+
+    const loadingSkeleton = () => {
+        return (
+            <div className="skItem">
+                <div className="thumb skeleton"></div>
+                <div className="row skeleton"></div>
+                <div className="row2 skeleton"></div>
+            </div>
+        );
+    };
+
     return (
         <div className="videosSection">
             <ContentWrapper>
@@ -36,7 +47,12 @@ const VideosSection = ({ data, loading }) => {
                         ))}
                     </div>
                 ) : (
-                    <span>Loading...</span>
+                    <div className="videoSkeleton">
+                        {loadingSkeleton()}
+                        {loadingSkeleton()}
+                        {loadingSkeleton()}
+                        {loadingSkeleton()}
+                    </div>
                 )}
             </ContentWrapper>
             <VideoPopup

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { SlMenu } from "react-icons/sl";
 import { VscChromeClose } from "react-icons/vsc";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import "./style.scss";
 
@@ -14,6 +14,7 @@ const Header = () => {
     const [lastScrollY, setLastScrollY] = useState(0);
     const [mobileMenu, setMobileMenu] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
 
     const controlNavbar = () => {
         if (window.scrollY > 200) {
@@ -36,6 +37,10 @@ const Header = () => {
             };
         }
     }, [lastScrollY]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location]);
 
     return (
         <header className={`header ${mobileMenu ? "mobileView" : ""} ${show}`}>

@@ -15,6 +15,10 @@ function App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location]);
+
+    useEffect(() => {
         fetchApiConfig();
         fetchPopular();
         genresCall();

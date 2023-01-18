@@ -7,29 +7,52 @@ import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
 
 const Cast = ({ data, loading }) => {
     const { url } = useSelector((state) => state.home);
+
+    const skeleton = () => {
+        return (
+            <div className="skItem">
+                <div className="circle skeleton"></div>
+                <div className="row skeleton"></div>
+                <div className="row2 skeleton"></div>
+            </div>
+        );
+    };
     return (
         <div className="castSection">
             <ContentWrapper>
                 <div className="sectionHeading">Top Cast</div>
-                <div className="listItems">
-                    {data?.map((item) => {
-                        if (!item.profile_path) return;
-                        return (
-                            <div key={item.id} className="listItem">
-                                <div className="profileImg">
-                                    <img
-                                        src={url.profile + item.profile_path}
-                                        alt=""
-                                    />
+                {!loading ? (
+                    <div className="listItems">
+                        {data?.map((item) => {
+                            if (!item.profile_path) return;
+                            return (
+                                <div key={item.id} className="listItem">
+                                    <div className="profileImg">
+                                        <img
+                                            src={
+                                                url.profile + item.profile_path
+                                            }
+                                            alt=""
+                                        />
+                                    </div>
+                                    <div className="name">{item.name}</div>
+                                    <div className="character">
+                                        {item.character}
+                                    </div>
                                 </div>
-                                <div className="name">{item.name}</div>
-                                <div className="character">
-                                    {item.character}
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
+                            );
+                        })}
+                    </div>
+                ) : (
+                    <div className="castSkeleton">
+                        {skeleton()}
+                        {skeleton()}
+                        {skeleton()}
+                        {skeleton()}
+                        {skeleton()}
+                        {skeleton()}
+                    </div>
+                )}
             </ContentWrapper>
         </div>
     );

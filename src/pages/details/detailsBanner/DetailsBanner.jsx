@@ -19,7 +19,7 @@ const DetailsBanner = ({ video, crew }) => {
     const { mediaType, id } = useParams();
     const { url } = useSelector((state) => state.home);
 
-    const { data, loading, error } = useFetch(`/${mediaType}/${id}`);
+    const { data, loading } = useFetch(`/${mediaType}/${id}`);
 
     const _generes = data?.genres.map((g) => g.id);
 
@@ -145,7 +145,20 @@ const DetailsBanner = ({ video, crew }) => {
                     )}
                 </>
             ) : (
-                <span style={{ color: "white", fontSize: 50 }}>Loading...</span>
+                <div className="detailsBannerSkeleton">
+                    <ContentWrapper>
+                        <div className="left skeleton"></div>
+                        <div className="right">
+                            <div className="row skeleton"></div>
+                            <div className="row skeleton"></div>
+                            <div className="row skeleton"></div>
+                            <div className="row skeleton"></div>
+                            <div className="row skeleton"></div>
+                            <div className="row skeleton"></div>
+                            <div className="row skeleton"></div>
+                        </div>
+                    </ContentWrapper>
+                </div>
             )}
         </div>
     );
