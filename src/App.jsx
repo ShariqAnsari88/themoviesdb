@@ -4,12 +4,13 @@ import { fetchDataFromApi } from "./utils/api";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
-import { getPopular, getApiConfiguration, getGenres } from "./store/homeSlice";
+import { getApiConfiguration, getGenres } from "./store/homeSlice";
 
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import Home from "./pages/home/Home";
 import Details from "./pages/details/Details";
+import SearchResult from "./pages/searchResult/SearchResult";
 
 function App() {
     const dispatch = useDispatch();
@@ -20,16 +21,8 @@ function App() {
 
     useEffect(() => {
         fetchApiConfig();
-        fetchPopular();
         genresCall();
     }, []);
-
-    const fetchPopular = () => {
-        fetchDataFromApi("/movie/popular").then((res) => {
-            console.log(res);
-            dispatch(getPopular(res.results));
-        });
-    };
 
     const fetchApiConfig = () => {
         fetchDataFromApi("/configuration").then((res) => {
@@ -66,6 +59,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/:mediaType/:id" element={<Details />} />
+                <Route path="/search/:query" element={<SearchResult />} />
             </Routes>
             <Footer />
         </BrowserRouter>

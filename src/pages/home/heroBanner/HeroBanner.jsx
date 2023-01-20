@@ -1,23 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import "./style.scss";
 
 import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
 import Img from "../../../components/lazyLoadImage/Img";
+import useFetch from "../../../hooks/useFetch";
 
 const HeroBanner = () => {
-    const { url, popular } = useSelector((state) => state.home);
+    const [background, setBackground] = useState("");
+    const [query, setQuery] = useState("");
+    const { url } = useSelector((state) => state.home);
+    const navigate = useNavigate();
+
+    const { data, loading } = useFetch("/movie/upcoming");
+
+    useEffect(() => {
+        const bg =
+            url.backdrop +
+            data?.results[Math.floor(Math.random() * 20)]?.backdrop_path;
+        setBackground(bg);
+    }, [data]);
+
+    const searchQueryHandler = (event) => {
+        if (event?.key === "Enter" && query?.length > 0) {
+            navigate(`/search/${query}`);
+        }
+    };
 
     return (
         <div className="heroBanner">
-            <div className="backdrop-img">
-                <Img
-                    src={
-                        url.backdrop +
-                        popular[Math.floor(Math.random() * 20)]?.backdrop_path
-                    }
-                />
-            </div>
+            {!loading && (
+                <div className="backdrop-img">
+                    <Img src={background} />
+                </div>
+            )}
 
             <div className="opacity-layer" />
             <ContentWrapper>
@@ -31,6 +48,8 @@ const HeroBanner = () => {
                         <input
                             type="text"
                             placeholder="Search for a movie, tv show, person......"
+                            onChange={(e) => setQuery(e.target.value)}
+                            onKeyUp={(e) => searchQueryHandler(e)}
                         />
                         <button>Search</button>
                     </div>
