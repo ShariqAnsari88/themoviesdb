@@ -7,10 +7,14 @@ import "./style.scss";
 import Img from "../lazyLoadImage/Img";
 import CircleRating from "../circleRating/CircleRating";
 import Genres from "../genres/Genres";
+import PosterFallback from "../../assets/no-poster.jpeg";
 
 const MovieCard = ({ data, fromSearch }) => {
     const { url } = useSelector((state) => state.home);
     const navigate = useNavigate();
+    const posterUrl = data.poster_path
+        ? url.poster + data.poster_path
+        : PosterFallback;
     return (
         <div
             className="movieCard"
@@ -19,10 +23,7 @@ const MovieCard = ({ data, fromSearch }) => {
             }
         >
             <div className="posterBlock">
-                <Img
-                    className="posterImg"
-                    src={url.poster + data.poster_path}
-                />
+                <Img className="posterImg" src={posterUrl} />
                 {!fromSearch && (
                     <React.Fragment>
                         <CircleRating rating={data.vote_average.toFixed(1)} />
