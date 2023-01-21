@@ -5,6 +5,7 @@ import "./style.scss";
 
 import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
 import Img from "../../../components/lazyLoadImage/Img";
+import avatar from "../../../assets/avatar.png";
 
 const Cast = ({ data, loading }) => {
     const { url } = useSelector((state) => state.home);
@@ -25,15 +26,14 @@ const Cast = ({ data, loading }) => {
                 {!loading ? (
                     <div className="listItems">
                         {data?.map((item) => {
-                            if (!item.profile_path) return;
+                            // if (!item.profile_path) return;
+                            let imgUrl = item.profile_path
+                                ? url.profile + item.profile_path
+                                : avatar;
                             return (
                                 <div key={item.id} className="listItem">
                                     <div className="profileImg">
-                                        <Img
-                                            src={
-                                                url.profile + item.profile_path
-                                            }
-                                        />
+                                        <Img src={imgUrl} />
                                     </div>
                                     <div className="name">{item.name}</div>
                                     <div className="character">

@@ -12,6 +12,7 @@ import Genres from "../../../components/genres/Genres";
 import CircleRating from "../../../components/circleRating/CircleRating";
 import VideoPopup from "../../../components/videoPopup/VideoPopup.jsx";
 import Img from "../../../components/lazyLoadImage/Img.jsx";
+import PosterFallback from "../../../assets/no-poster.png";
 
 const DetailsBanner = ({ video, crew }) => {
     const [show, setShow] = useState(false);
@@ -48,12 +49,20 @@ const DetailsBanner = ({ video, crew }) => {
                             <ContentWrapper>
                                 <div className="content">
                                     <div className="left">
-                                        <Img
-                                            className="posterImg"
-                                            src={
-                                                url.backdrop + data.poster_path
-                                            }
-                                        />
+                                        {data.poster_path ? (
+                                            <Img
+                                                className="posterImg"
+                                                src={
+                                                    url.backdrop +
+                                                    data.poster_path
+                                                }
+                                            />
+                                        ) : (
+                                            <Img
+                                                className="posterImg"
+                                                src={PosterFallback}
+                                            />
+                                        )}
                                     </div>
                                     <div className="right">
                                         <div className="title">

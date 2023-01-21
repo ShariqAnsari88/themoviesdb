@@ -7,7 +7,7 @@ import "./style.scss";
 import Img from "../lazyLoadImage/Img";
 import CircleRating from "../circleRating/CircleRating";
 import Genres from "../genres/Genres";
-import PosterFallback from "../../assets/no-poster.jpeg";
+import PosterFallback from "../../assets/no-poster.png";
 
 const MovieCard = ({ data, fromSearch }) => {
     const { url } = useSelector((state) => state.home);

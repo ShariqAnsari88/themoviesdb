@@ -11,7 +11,7 @@ import ContentWrapper from "../contentWrapper/ContentWrapper";
 import CircleRating from "../circleRating/CircleRating";
 import Genres from "../genres/Genres";
 import Img from "../lazyLoadImage/Img";
-import PosterFallback from "../../assets/no-poster.jpeg";
+import PosterFallback from "../../assets/no-poster.png";
 
 import "./style.scss";
 
