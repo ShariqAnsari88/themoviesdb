@@ -49,7 +49,7 @@ const Header = () => {
                 </div>
 
                 <ul className="menuItems">
-                    {menuData.map((menu) => {
+                    {/* {menuData.map((menu) => {
                         return (
                             <li key={menu.id} className="menuItem">
                                 {menu.name}
@@ -67,7 +67,19 @@ const Header = () => {
                                 )}
                             </li>
                         );
-                    })}
+                    })} */}
+                    <li
+                        className="menuItem"
+                        onClick={() => navigate("/explore/movie")}
+                    >
+                        Movies
+                    </li>
+                    <li
+                        className="menuItem"
+                        onClick={() => navigate("/explore/tv")}
+                    >
+                        TV Shows
+                    </li>
                     <li className="menuItem">
                         <HiOutlineSearch />
                     </li>

@@ -9,7 +9,7 @@ import CircleRating from "../circleRating/CircleRating";
 import Genres from "../genres/Genres";
 import PosterFallback from "../../assets/no-poster.png";
 
-const MovieCard = ({ data, fromSearch }) => {
+const MovieCard = ({ data, fromSearch, mediaType }) => {
     const { url } = useSelector((state) => state.home);
     const navigate = useNavigate();
     const posterUrl = data.poster_path
@@ -19,7 +19,7 @@ const MovieCard = ({ data, fromSearch }) => {
         <div
             className="movieCard"
             onClick={() =>
-                navigate(`/${data.media_type || endpoint}/${data.id}`)
+                navigate(`/${data.media_type || mediaType}/${data.id}`)
             }
         >
             <div className="posterBlock">
