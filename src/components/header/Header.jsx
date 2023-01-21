@@ -30,12 +30,10 @@ const Header = () => {
     };
 
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            window.addEventListener("scroll", controlNavbar);
-            return () => {
-                window.removeEventListener("scroll", controlNavbar);
-            };
-        }
+        window.addEventListener("scroll", controlNavbar);
+        return () => {
+            window.removeEventListener("scroll", controlNavbar);
+        };
     }, [lastScrollY]);
 
     useEffect(() => {

@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import "./style.scss";
 
 import { fetchDataFromApi } from "../../utils/api";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import MovieCard from "../../components/movieCard/MovieCard";
-
-let fetching = false;
-let total_pages = null;
-let page_num = 1;
+import Spinner from "../../components/spinner/Spinner";
 
 const SearchResult = () => {
     const [data, setData] = useState(null);
-    const [isFetching, setIsFetching] = useState(false);
+    const [pageNum, setPageNum] = useState(1);
     const { query } = useParams();
 
-    const fetchData = () => {
-        fetchDataFromApi(`/search/multi?query=${query}&page=${page_num}`).then(
+    const fetchInitialData = () => {
+        fetchDataFromApi(`/search/multi?query=${query}&page=${pageNum}`).then(
             (res) => {
-                page_num++;
-                total_pages = res.total_pages;
+                setData(res);
+                setPageNum((prev) => prev + 1);
+            }
+        );
+    };
+
+    const fetchNextPageData = () => {
+        fetchDataFromApi(`/search/multi?query=${query}&page=${pageNum}`).then(
+            (res) => {
                 if (data?.results) {
                     setData({
                         ...data,
@@ -29,46 +34,32 @@ const SearchResult = () => {
                 } else {
                     setData(res);
                 }
-                setIsFetching(false);
+                setPageNum((prev) => prev + 1);
             }
         );
     };
 
     useEffect(() => {
-        fetchData();
-        document.addEventListener("scroll", scrollReachedToBottom);
-        return () => {
-            document.removeEventListener("scroll", scrollReachedToBottom);
-        };
+        fetchInitialData();
     }, []);
 
-    const scrollReachedToBottom = () => {
-        if (
-            window.innerHeight + document.documentElement.scrollTop !==
-            document.documentElement.offsetHeight
-        )
-            return;
-
-        console.log("bottom");
-        if (page_num <= total_pages) {
-            setIsFetching(true);
-        }
-    };
-
-    useEffect(() => {
-        if (!isFetching) return;
-        fetchData();
-    }, [isFetching]);
+    if (!data) return <Spinner initial={true} />;
 
     return (
         <div className="searchResultsPage">
             <ContentWrapper>
                 <div className="pageTitle">
-                    {`Found ${data?.total_results} search ${
+                    {`Search ${
                         data?.total_results > 1 ? "results" : "result"
                     } of '${query}'`}
                 </div>
-                <div className="content">
+                <InfiniteScroll
+                    className="content"
+                    dataLength={data?.results?.length}
+                    next={fetchNextPageData}
+                    hasMore={pageNum <= data?.total_pages}
+                    loader={<Spinner />}
+                >
                     {data?.results?.map((item, index) => {
                         if (item.media_type === "person") return;
                         return (
@@ -79,7 +70,7 @@ const SearchResult = () => {
                             />
                         );
                     })}
-                </div>
+                </InfiniteScroll>
             </ContentWrapper>
         </div>
     );
