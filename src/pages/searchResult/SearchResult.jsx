@@ -12,13 +12,16 @@ import Spinner from "../../components/spinner/Spinner";
 const SearchResult = () => {
     const [data, setData] = useState(null);
     const [pageNum, setPageNum] = useState(1);
+    const [loading, setLoading] = useState(false);
     const { query } = useParams();
 
     const fetchInitialData = () => {
+        setLoading(true);
         fetchDataFromApi(`/search/multi?query=${query}&page=${pageNum}`).then(
             (res) => {
                 setData(res);
                 setPageNum((prev) => prev + 1);
+                setLoading(false);
             }
         );
     };
@@ -41,37 +44,38 @@ const SearchResult = () => {
 
     useEffect(() => {
         fetchInitialData();
-    }, []);
-
-    if (!data) return <Spinner initial={true} />;
+    }, [query]);
 
     return (
         <div className="searchResultsPage">
-            <ContentWrapper>
-                <div className="pageTitle">
-                    {`Search ${
-                        data?.total_results > 1 ? "results" : "result"
-                    } of '${query}'`}
-                </div>
-                <InfiniteScroll
-                    className="content"
-                    dataLength={data?.results?.length}
-                    next={fetchNextPageData}
-                    hasMore={pageNum <= data?.total_pages}
-                    loader={<Spinner />}
-                >
-                    {data?.results?.map((item, index) => {
-                        if (item.media_type === "person") return;
-                        return (
-                            <MovieCard
-                                key={index}
-                                data={item}
-                                fromSearch={true}
-                            />
-                        );
-                    })}
-                </InfiniteScroll>
-            </ContentWrapper>
+            {loading && <Spinner initial={true} />}
+            {!loading && (
+                <ContentWrapper>
+                    <div className="pageTitle">
+                        {`Search ${
+                            data?.total_results > 1 ? "results" : "result"
+                        } of '${query}'`}
+                    </div>
+                    <InfiniteScroll
+                        className="content"
+                        dataLength={data?.results?.length || []}
+                        next={fetchNextPageData}
+                        hasMore={pageNum <= data?.total_pages}
+                        loader={<Spinner />}
+                    >
+                        {data?.results?.map((item, index) => {
+                            if (item.media_type === "person") return;
+                            return (
+                                <MovieCard
+                                    key={index}
+                                    data={item}
+                                    fromSearch={true}
+                                />
+                            );
+                        })}
+                    </InfiniteScroll>
+                </ContentWrapper>
+            )}
         </div>
     );
 };
