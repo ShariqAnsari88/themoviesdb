@@ -9,7 +9,7 @@ import "./style.scss";
 
 const Home = () => {
     return (
-        <div>
+        <div className="homePage">
             <HeroBanner />
             <Trending />
             <Popular />

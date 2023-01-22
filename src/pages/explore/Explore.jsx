@@ -133,24 +133,32 @@ const Explore = () => {
                 </div>
                 {loading && <Spinner initial={true} />}
                 {!loading && (
-                    <InfiniteScroll
-                        className="content"
-                        dataLength={data?.results?.length || []}
-                        next={fetchNextPageData}
-                        hasMore={pageNum <= data?.total_pages}
-                        loader={<Spinner />}
-                    >
-                        {data?.results?.map((item, index) => {
-                            if (item.media_type === "person") return;
-                            return (
-                                <MovieCard
-                                    key={index}
-                                    data={item}
-                                    mediaType={mediaType}
-                                />
-                            );
-                        })}
-                    </InfiniteScroll>
+                    <>
+                        {data?.results?.length > 0 ? (
+                            <InfiniteScroll
+                                className="content"
+                                dataLength={data?.results?.length || []}
+                                next={fetchNextPageData}
+                                hasMore={pageNum <= data?.total_pages}
+                                loader={<Spinner />}
+                            >
+                                {data?.results?.map((item, index) => {
+                                    if (item.media_type === "person") return;
+                                    return (
+                                        <MovieCard
+                                            key={index}
+                                            data={item}
+                                            mediaType={mediaType}
+                                        />
+                                    );
+                                })}
+                            </InfiniteScroll>
+                        ) : (
+                            <span className="resultNotFound">
+                                Sorry, Results not found!
+                            </span>
+                        )}
+                    </>
                 )}
             </ContentWrapper>
         </div>
